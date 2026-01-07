@@ -52,7 +52,6 @@ public class User {
     public boolean follows(String name) {
         if (name == null)
             return false;
-
         for (int i = 0; i < fCount; i++) {
             if (follows[i].equals(name)) {
                 return true;
@@ -69,18 +68,11 @@ public class User {
     public boolean addFollowee(String name) {
         if (name == null)
             return false;
-
-        // Check if list is full
-        if (fCount == maxfCount) {
+        if (fCount == maxfCount)
             return false;
-        }
-
-        // Check if user already follows this name
-        if (follows(name)) {
+        if (follows(name))
             return false;
-        }
 
-        // Add the name to the first available spot
         follows[fCount] = name;
         fCount++;
         return true;
@@ -94,8 +86,6 @@ public class User {
     public boolean removeFollowee(String name) {
         if (name == null)
             return false;
-
-        // Find the index of the name
         int index = -1;
         for (int i = 0; i < fCount; i++) {
             if (follows[i].equals(name)) {
@@ -103,23 +93,14 @@ public class User {
                 break;
             }
         }
-
-        // If not found, return false
-        if (index == -1) {
+        if (index == -1)
             return false;
-        }
 
-        // Shift elements to the left to close the gap
         for (int i = index; i < fCount - 1; i++) {
             follows[i] = follows[i + 1];
         }
-
-        // Set the last element (which is now a duplicate) to null
         follows[fCount - 1] = null;
-
-        // Decrement count
         fCount--;
-
         return true;
     }
 
@@ -129,12 +110,8 @@ public class User {
      */
     public int countMutual(User other) {
         int mutualCount = 0;
-
-        // Iterate through this user's follows list
         for (int i = 0; i < this.fCount; i++) {
             String myFollowee = this.follows[i];
-
-            // Check if the other user also follows this person
             if (other.follows(myFollowee)) {
                 mutualCount++;
             }
@@ -147,7 +124,6 @@ public class User {
      * (if two users follow each other, they are said to be "friends.")
      */
     public boolean isFriendOf(User other) {
-        // I follow them AND they follow me
         return this.follows(other.getName()) && other.follows(this.name);
     }
 
